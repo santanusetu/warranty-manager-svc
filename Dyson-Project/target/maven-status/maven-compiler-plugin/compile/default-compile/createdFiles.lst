@@ -1,0 +1,9 @@
+com/dyson/backend/dto/WarrantyValidationRequest.class
+com/dyson/backend/service/WarrantyService.class
+com/dyson/backend/dto/WarrantyDto.class
+com/dyson/backend/dto/WarrantyValidationResponse.class
+com/dyson/backend/service/impl/WarrantyServiceImpl.class
+com/dyson/backend/model/Warranty.class
+com/dyson/backend/DysonBackendApplication.class
+com/dyson/backend/model/WarrantyStatus.class
+com/dyson/backend/controller/WarrantyController.class
