@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @RestController
@@ -56,13 +58,20 @@ public class WarrantyController {
             return new ResponseEntity<>("Warranty expiry date not set.", HttpStatus.BAD_REQUEST);
         }
 
-        boolean isValid = warranty.getWarrantyExpiryDate().isAfter(java.time.LocalDate.now());
+        LocalDate expiryDate = warranty.getWarrantyExpiryDate();
+        LocalDate today = LocalDate.now();
 
-        String message = isValid
-                ? "Product is within warranty."
-                : "Product warranty has expired.";
+        if (expiryDate.isBefore(today)) {
+            return ResponseEntity.ok("Product warranty has expired.");
+        }
 
-        return ResponseEntity.ok(message);
+        long daysLeft = ChronoUnit.DAYS.between(today, expiryDate);
+
+        if (daysLeft < 30) {
+            return ResponseEntity.ok("Product is within warranty, but it expires in less than 1 month.");
+        }
+
+        return ResponseEntity.ok("Product is within warranty.");
     }
 
 }
